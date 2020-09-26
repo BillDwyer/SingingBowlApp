@@ -14,6 +14,9 @@ class SingingBowl {
     ctx.fillStyle = 'rgba(0, 0, 0, 1)'
     ctx.beginPath();
     ctx.arc(Math.floor(canvas.width/2), Math.floor(canvas.height/2), Math.floor(Math.min(canvas.width/4,canvas.height/4)), 0, 2 * Math.PI);
+    if (ctx.isPointInPath(mouse.x, mouse.y)){
+      ctx.fillStyle = 'rgba(255, 0, 0, 1)'
+    };
     ctx.fill();
   }
   update = () => {
