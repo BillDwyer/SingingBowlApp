@@ -1,5 +1,11 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+var gainNode = audioCtx.createGain();
+gainNode.gain.value = .05;
+gainNode.connect(audioCtx.destination);
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 window.addEventListener('resize', function () {
@@ -32,7 +38,10 @@ class SingingBowl {
         this.color = 'rgba(0, 0, 0, 1)';
       };
     };
-
+    var oscillator = audioCtx.createOscillator();
+    oscillator.connect(gainNode);
+    oscillator.start(audioCtx.currentTime + .0001);
+    oscillator.stop(audioCtx.currentTime + .8);
   }
 }
 const bowl = new SingingBowl();
