@@ -6,11 +6,11 @@ var gainNode = audioCtx.createGain();
 gainNode.gain.value = .05;
 gainNode.connect(audioCtx.destination);
 
-canvas.width = 1000 //window.innerWidth;
-canvas.height = 1000 //window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 window.addEventListener('resize', function () {
-  //canvas.width = window.innerWidth;
-  //canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
 
 class SingingBowl {
