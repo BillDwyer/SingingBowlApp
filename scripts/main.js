@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
 var gainNode = audioCtx.createGain();
-gainNode.gain.value = .05;
+gainNode.gain.value = .08;
 gainNode.connect(audioCtx.destination);
 
 canvas.width = window.innerWidth;
@@ -31,17 +31,12 @@ class SingingBowl {
   }
   ring = () => {
     if (ctx.isPointInPath(this.bowl,mouse.x, mouse.y)){
-      if (this.color === 'rgba(0, 0, 0, 1)'){
-        this.color = 'rgba(0,255,0,1)'
-      }
-      else{
-        this.color = 'rgba(0, 0, 0, 1)';
-      };
+      var oscillator = audioCtx.createOscillator();
+      oscillator.connect(gainNode);
+      oscillator.start(audioCtx.currentTime + .0001);
+      oscillator.stop(audioCtx.currentTime + .8);
     };
-    var oscillator = audioCtx.createOscillator();
-    oscillator.connect(gainNode);
-    oscillator.start(audioCtx.currentTime + .0001);
-    oscillator.stop(audioCtx.currentTime + .8);
+
   }
 }
 const bowl = new SingingBowl();
