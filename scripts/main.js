@@ -42,7 +42,7 @@ let mouse = {
   y: undefined
 };
 
-window.addEventListener('resize', function () {
+window.addEventListener('resize', function (e) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   bowl.resize();
