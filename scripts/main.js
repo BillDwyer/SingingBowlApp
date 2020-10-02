@@ -50,7 +50,7 @@ window.addEventListener('resize', function () {
 
 canvas.addEventListener("mouseup", function (e) {
   bowl.ring();
-}, false);
+});
 
 
 window.addEventListener('mousemove', function (e) {
