@@ -62,7 +62,7 @@ window.addEventListener('mousemove', function (e) {
 });
 
 function animate() {
-  requestAnimationFrame(animate);
+  //requestAnimationFrame(animate);
   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   bowl.draw();
 };
