@@ -12,20 +12,17 @@ canvas.height = window.innerHeight;
 
 class SingingBowl {
   constructor() {
-    this.color = 'rgba(0, 0, 0, 1)'
+    this.color = 'rgba(0, 0, 0, 1)';
     this.bowl = new Path2D();
     this.bowl.arc(Math.floor(canvas.width/2), Math.floor(canvas.height/2), Math.floor(Math.min(canvas.width/3,canvas.height/3)), 0, 2 * Math.PI);
-  }
+  };
   draw = () => {
     ctx.fillStyle = this.color;
     if (ctx.isPointInPath(this.bowl,mouse.x, mouse.y)){
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     };
     ctx.fill(this.bowl);
-  }
-  update = () => {
-
-  }
+  };
   ring = () => {
     if (ctx.isPointInPath(this.bowl,mouse.x, mouse.y)){
       var oscillator = audioCtx.createOscillator();
@@ -33,12 +30,12 @@ class SingingBowl {
       oscillator.start(audioCtx.currentTime + .0001);
       oscillator.stop(audioCtx.currentTime + .8);
     };
-  }
+  };
   resize = () => {
     this.bowl = new Path2D();
     this.bowl.arc(Math.floor(canvas.width/2), Math.floor(canvas.height/2), Math.floor(Math.min(canvas.width/3,canvas.height/3)), 0, 2 * Math.PI);
   };
-}
+};
 const bowl = new SingingBowl();
 let mouse = {
   x: undefined,
@@ -52,7 +49,7 @@ window.addEventListener('resize', function () {
 });
 
 canvas.addEventListener("mouseup", function (e) {
-  bowl.ring()
+  bowl.ring();
 }, false);
 
 
