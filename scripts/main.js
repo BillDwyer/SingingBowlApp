@@ -1,10 +1,10 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-//const AudioContext = window.AudioContext || window.webkitAudioContext;
-//const audioCtx = new AudioContext();
-//var gainNode = audioCtx.createGain();
-//gainNode.gain.value = .08;
-//gainNode.connect(audioCtx.destination);
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+var gainNode = audioCtx.createGain();
+gainNode.gain.value = .08;
+gainNode.connect(audioCtx.destination);
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -28,10 +28,10 @@ class SingingBowl {
   }
   ring = () => {
     if (ctx.isPointInPath(this.bowl,mouse.x, mouse.y)){
-      //var oscillator = audioCtx.createOscillator();
-      //oscillator.connect(gainNode);
-      //oscillator.start(audioCtx.currentTime + .0001);
-      //oscillator.stop(audioCtx.currentTime + .8);
+      var oscillator = audioCtx.createOscillator();
+      oscillator.connect(gainNode);
+      oscillator.start(audioCtx.currentTime + .0001);
+      oscillator.stop(audioCtx.currentTime + .8);
     };
   }
   resize = () => {
@@ -62,7 +62,7 @@ window.addEventListener('mousemove', function (e) {
 });
 
 function animate() {
-  //requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   bowl.draw();
 };
