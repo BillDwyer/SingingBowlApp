@@ -9,6 +9,10 @@ gainNode.connect(audioCtx.destination);
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let mouse = {
+  x: undefined,
+  y: undefined
+};
 
 class SingingBowl {
   constructor() {
@@ -37,10 +41,7 @@ class SingingBowl {
   };
 };
 const bowl = new SingingBowl();
-let mouse = {
-  x: undefined,
-  y: undefined
-};
+
 
 window.addEventListener('resize', function (e) {
   canvas.width = window.innerWidth;
@@ -48,7 +49,7 @@ window.addEventListener('resize', function (e) {
   bowl.resize();
 });
 
-canvas.addEventListener("mouseup", function (e) {
+canvas.addEventListener('mouseup', function (e) {
   bowl.ring();
 });
 
