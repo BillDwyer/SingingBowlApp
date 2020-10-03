@@ -55,6 +55,8 @@ window.addEventListener('resize', function (e) {
 });
 
 canvas.addEventListener('pointerdown', function (e) {
+  mouse.x = event.x;
+  mouse.y = event.y;
   bowl.ring(e.pressure);
 });
 
