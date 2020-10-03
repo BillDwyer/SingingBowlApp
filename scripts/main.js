@@ -1,11 +1,8 @@
 const canvas = document.getElementById('canvas');
+const pressTest = document.getElementById('pressure');
 const ctx = canvas.getContext('2d');
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
-var gainNode = audioCtx.createGain();
-
-gainNode.gain.value = 0;
-gainNode.connect(audioCtx.destination);
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -18,9 +15,6 @@ let mouse = {
 class SingingBowl {
   constructor() {
     this.color = 'rgba(0, 0, 0, 1)';
-    this.oscillator = audioCtx.createOscillator();
-    this.oscillator.connect(gainNode);
-    this.on = false;
     this.bowl = new Path2D();
     this.bowl.arc(Math.floor(canvas.width/2), Math.floor(canvas.height/2), Math.floor(Math.min(canvas.width/3,canvas.height/3)), 0, 2 * Math.PI);
   };
@@ -31,15 +25,18 @@ class SingingBowl {
     };
     ctx.fill(this.bowl);
   };
-  ring() {
+  ring(pressure) {
     if (ctx.isPointInPath(this.bowl,mouse.x, mouse.y)){
-      if(!this.on){
-        this.oscillator.start(audioCtx.currentTime + .00001);
-        this.on = true;
-      }
-
+      var gainNode = audioCtx.createGain();
+      var oscillator = audioCtx.createOscillator();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      gainNode.gain.setValueAtTime(0,audioCtx.currentTime);
+      oscillator.start(audioCtx.currentTime + .00001);
+      var plog = Math.max(Math.min(Math.log10(pressure*100),1),.1);
+      pressTest.textContent = plog;
       gainNode.gain.cancelScheduledValues(audioCtx.currentTime + .0001);
-      gainNode.gain.setValueAtTime(.1, audioCtx.currentTime + .0001);
+      gainNode.gain.setValueAtTime(.2*plog, audioCtx.currentTime + .0001);
       gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1)
     };
   };
@@ -57,12 +54,12 @@ window.addEventListener('resize', function (e) {
   bowl.resize();
 });
 
-canvas.addEventListener('mouseup', function (e) {
-  bowl.ring();
+canvas.addEventListener('pointerdown', function (e) {
+  bowl.ring(e.pressure);
 });
 
 
-window.addEventListener('mousemove', function (e) {
+window.addEventListener('pointermove', function (e) {
   mouse.x = event.x;
   mouse.y = event.y;
 });
